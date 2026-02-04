@@ -1,0 +1,299 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Video, Mic, Square, Play, Upload, AlertCircle, RefreshCw } from 'lucide-react';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import Loader from '../components/Loader';
+
+const VideoInterview = () => {
+    const navigate = useNavigate();
+    const [permissionGranted, setPermissionGranted] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
+    const [recordedChunks, setRecordedChunks] = useState([]);
+    const [videoBlob, setVideoBlob] = useState(null);
+    const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
+    const [uploading, setUploading] = useState(false);
+    const [error, setError] = useState('');
+
+    const videoRef = useRef(null);
+    const mediaRecorderRef = useRef(null);
+    const streamRef = useRef(null);
+    const timerRef = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            stopStream();
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
+    }, []);
+
+    const stopStream = () => {
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop());
+        }
+    };
+
+    const startCamera = async () => {
+        try {
+            setError('');
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            streamRef.current = stream;
+            if (videoRef.current) {
+                videoRef.current.srcObject = stream;
+                videoRef.current.muted = true;
+            }
+            setPermissionGranted(true);
+        } catch (err) {
+            console.error(err);
+            setError('Could not access camera/microphone. Please allow permissions.');
+        }
+    };
+
+    const startRecording = () => {
+        setRecordedChunks([]);
+        setVideoBlob(null);
+        setIsRecording(true);
+        setTimeLeft(120);
+
+        const mediaRecorder = new MediaRecorder(streamRef.current);
+        mediaRecorderRef.current = mediaRecorder;
+
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                setRecordedChunks((prev) => [...prev, event.data]);
+            }
+        };
+
+        mediaRecorder.start();
+
+        timerRef.current = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev <= 1) {
+                    stopRecording();
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+    };
+
+    const stopRecording = () => {
+        if (mediaRecorderRef.current && isRecording) {
+            mediaRecorderRef.current.stop();
+            setIsRecording(false);
+            clearInterval(timerRef.current);
+        }
+    };
+
+    useEffect(() => {
+        if (!isRecording && recordedChunks.length > 0) {
+            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            setVideoBlob(blob);
+            if (videoRef.current) {
+                videoRef.current.srcObject = null;
+                videoRef.current.src = URL.createObjectURL(blob);
+                videoRef.current.muted = false;
+                videoRef.current.controls = true;
+            }
+        }
+    }, [isRecording, recordedChunks]);
+
+    const resetRecording = () => {
+        setVideoBlob(null);
+        setRecordedChunks([]);
+        setTimeLeft(120);
+        if (videoRef.current) {
+            videoRef.current.src = '';
+            videoRef.current.controls = false;
+            videoRef.current.load();
+        }
+        startCamera();
+    };
+
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const handleSubmit = async () => {
+        if (!videoBlob) return;
+
+        setUploading(true);
+        setError('');
+
+        const formData = new FormData();
+        formData.append('video', videoBlob, 'interview.webm');
+
+        try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            navigate('/quiz');
+        } catch (err) {
+            console.error(err);
+            setError('Upload failed. Please try again.');
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    return (
+        <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+            {/* Video Background */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+            >
+                <source src="/videos/interview-vid.mp4" type="video/mp4" />
+            </video>
+
+            {/* Content */}
+            <div className="relative z-10 max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 w-full">
+                <div className="text-center mb-8">
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg mb-3">
+                        Video Interview
+                    </h1>
+                    <p className="text-lg text-blue-100 drop-shadow-md">
+                        Tell us about yourself and why you want to join this program
+                    </p>
+                </div>
+
+                <Card className="p-1 sm:p-2 overflow-hidden bg-slate-900/95 backdrop-blur-sm border-0 shadow-2xl">
+                    <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+                        {!permissionGranted && !videoBlob ? (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
+                                <div className="relative mb-6">
+                                    <div className="absolute inset-0 bg-indigo-500 blur-2xl opacity-30" />
+                                    <div className="relative bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-2xl shadow-lg">
+                                        <Video className="w-16 h-16" />
+                                    </div>
+                                </div>
+                                <h3 className="text-2xl font-bold mb-3">Camera Access Required</h3>
+                                <p className="text-blue-200 mb-8 text-center max-w-md">
+                                    We need access to your camera and microphone to record your interview
+                                </p>
+                                <Button
+                                    onClick={startCamera}
+                                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold px-8 py-3 shadow-lg border-0"
+                                >
+                                    Enable Camera & Microphone
+                                </Button>
+                            </div>
+                        ) : (
+                            <>
+                                <video
+                                    ref={videoRef}
+                                    autoPlay
+                                    playsInline
+                                    className="w-full h-full object-cover"
+                                />
+
+                                {isRecording && (
+                                    <div className="absolute top-4 right-4 flex items-center gap-2 bg-red-600/90 text-white px-4 py-2 rounded-full animate-pulse shadow-lg">
+                                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                                        <span className="font-mono font-bold text-lg">{formatTime(timeLeft)}</span>
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
+
+                    {/* Controls */}
+                    <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-800">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            {/* Status Text */}
+                            <div className="text-sm font-bold">
+                                {isRecording ? (
+                                    <span className="text-red-400 flex items-center gap-2">
+                                        <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                                        Recording in progress...
+                                    </span>
+                                ) : videoBlob ? (
+                                    <span className="text-green-400 flex items-center gap-2">
+                                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                                        Recording completed
+                                    </span>
+                                ) : permissionGranted ? (
+                                    <span className="text-blue-300">Ready to record (Max 2 mins)</span>
+                                ) : (
+                                    <span className="text-slate-400">Setup required</span>
+                                )}
+                            </div>
+
+                            {/* Action Buttons */}
+                            {permissionGranted && (
+                                <div className="flex items-center gap-3">
+                                    {!isRecording && !videoBlob && (
+                                        <Button
+                                            onClick={startRecording}
+                                            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white border-0 font-bold shadow-lg"
+                                        >
+                                            <div className="w-3 h-3 bg-white rounded-full mr-2"></div>
+                                            Start Recording
+                                        </Button>
+                                    )}
+
+                                    {isRecording && (
+                                        <Button
+                                            onClick={stopRecording}
+                                            className="bg-slate-700 hover:bg-slate-600 text-white border-0 font-bold"
+                                        >
+                                            <Square className="w-4 h-4 mr-2 fill-current" />
+                                            Stop Recording
+                                        </Button>
+                                    )}
+
+                                    {videoBlob && (
+                                        <>
+                                            <Button
+                                                onClick={resetRecording}
+                                                variant="ghost"
+                                                className="text-slate-300 hover:text-white hover:bg-slate-800"
+                                            >
+                                                <RefreshCw className="w-4 h-4 mr-2" />
+                                                Retake
+                                            </Button>
+                                            <Button
+                                                onClick={handleSubmit}
+                                                disabled={uploading}
+                                                className="min-w-[140px] bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold shadow-lg border-0"
+                                            >
+                                                {uploading ? (
+                                                    <Loader size="small" className="text-white" />
+                                                ) : (
+                                                    <>
+                                                        Submit Interview <Upload className="w-4 h-4 ml-2" />
+                                                    </>
+                                                )}
+                                            </Button>
+                                        </>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+
+                        {error && (
+                            <div className="mt-4 p-3 bg-red-900/50 border-2 border-red-700 rounded-lg text-red-200 text-sm flex items-center gap-2 font-medium">
+                                <AlertCircle className="w-5 h-5" />
+                                {error}
+                            </div>
+                        )}
+                    </div>
+                </Card>
+
+                <div className="mt-8 text-center">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                        <div className="w-3 h-3 rounded-full bg-indigo-400 shadow-lg shadow-indigo-400/50"></div>
+                        <div className="w-3 h-3 rounded-full bg-indigo-400 shadow-lg shadow-indigo-400/50"></div>
+                        <div className="w-3 h-3 rounded-full bg-white/30"></div>
+                    </div>
+                    <p className="text-sm text-white uppercase tracking-wider font-bold drop-shadow-md">Step 2 of 3</p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default VideoInterview;

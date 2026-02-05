@@ -1,0 +1,58 @@
+KRISHNARAJ K
+AI/ML Engineer specializing in GenAI, RAG Systems, and Full-Stack AI Applications
+Chennai, Tamil Nadu — +91 9360113501 — kkrishnarajr@gmail.com
+LinkedIn — GitHub — Portfolio
+PROFESSIONAL EXPERIENCE
+EMATIX
+Remote, India
+Frontend Developer Intern
+Nov 2025 – Present
+• Spearheading the development of a fully responsive e-commerce user interface using modular and reusable
+React components.
+• Enhancing user interaction quality by integrating Framer Motion to create smooth, high-performance
+micro-animations.
+• Ensuring cross-device consistency through a mobile-first design approach, utilizing semantic HTML and
+accessibility-focused layouts.
+Edu-Versity
+Remote
+AI Intern
+Jul 2025 – Nov 2025
+• Engineered a hybrid ML-based personalized learning recommendation system, increasing user en-
+gagement by 25%.
+• Optimized model inference time, achieving a reduction from 420ms to 180ms through strategic API
+optimization and response caching.
+KEY PROJECTS
+Coding Progress & Analytics System
+Tech Stack: React, JavaScript, FastAPI, PineconeDB, PostgreSQL, LangChain
+• Designed a centralized dashboard to track coding progress across multiple competitive platforms including
+LeetCode, GFG, CodeChef, HackerRank, and AtCoder
+• Implemented a RAG-based query system using Pinecone vector database to provide natural language
+insights on performance metrics
+Personalized Learning Chat Assistant
+Tech Stack: Mistral-7B, LangChain, ChromaDB, FastAPI, JavaScript
+• Built an intelligent assistant using Mistral-7B + RAG, improving the relevance of factual responses by
+35%.
+• Integrated an emotional tone adaptation layer via a lightweight classifier to enhance the user experience
+TECHNICAL SKILLS
+Languages: Python, Java, JavaScript, SQL
+Frontend: React, HTML5, CSS3, Framer Motion
+GenAI & ML: TensorFlow/Keras, RAG Systems, CNN Models, LangChain, Mistral-7B
+Backend/DB: FastAPI, PostgreSQL, Pinecone (Vector DB), ChromaDB
+Tools: Git, AWS, VSCode, Google Cloud Platform
+ACHIEVEMENTS
+• 1st Place, Innofest 2025: Secured top rank among 110 teams for innovative prototype design.
+• 1st Place, TJS Symposium: Awarded best project, competing against 80 teams.
+• 1st Place, Jaya Symposium: Ranked first among 59 teams for technical presentation.
+• 3rd Place, Impactathon: Achieved podium finish in a high-intensity hackathon of 132 teams.
+• Finalist, Genterix Innovation Challenge: Ranked in the Top 11 out of 250+ teams.
+EDUCATION
+St. Joseph’s College of Engineering
+Chennai, India
+B.Tech in Artificial Intelligence and Machine Learning
+Expected 2027
+CGPA: 8.32/10
+CERTIFICATIONS
+• Oracle OCI — Generative AI Professional
+• NPTEL — Google Cloud Computing (Elite Certification)
+• Udemy — Machine Learning with Python & R
+1

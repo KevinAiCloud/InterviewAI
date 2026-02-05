@@ -49,99 +49,95 @@ const Home = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
-                    {/* PEP Card - Enhanced */}
-                    <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 border-0 group hover:-translate-y-2">
-                        {/* Gradient Background Accent */}
-                        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 via-blue-600 to-cyan-500" />
+                    {/* PEP Card - Modern Rounded Style */}
+                    <Link to="/pep" className="block">
+                        <div className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-8 shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 group">
+                            {/* Decorative Elements */}
+                            <div className="absolute top-6 right-6 w-16 h-16 bg-yellow-400 rounded-full opacity-20 group-hover:opacity-30 transition-opacity" />
+                            <div className="absolute bottom-6 left-6 w-20 h-20 bg-cyan-400 rounded-full opacity-10 group-hover:opacity-20 transition-opacity" />
 
-                        <div className="relative z-10 bg-gradient-to-br from-white via-blue-50/30 to-white p-8">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="relative">
-                                    <div className="absolute inset-0 bg-blue-500 blur-xl opacity-50 group-hover:opacity-75 transition-opacity rounded-2xl" />
-                                    <div className="relative p-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl text-white shadow-lg group-hover:scale-110 transition-transform">
-                                        <Users className="w-10 h-10" />
+                            {/* Content */}
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
+                                        <Users className="w-8 h-8 text-white" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-3xl font-extrabold text-white">PEP</h3>
+                                        <p className="text-sm text-blue-200 font-medium">Placement Empowerment</p>
                                     </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-2xl font-extrabold text-slate-900 mb-1">PEP</h3>
-                                    <p className="text-sm text-slate-500 font-semibold">Placement Empowerment Programme</p>
-                                </div>
-                            </div>
 
-                            <p className="text-slate-700 mb-6 leading-relaxed text-base">
-                                Designed to prepare students for top-tier placements through rigorous aptitude training,
-                                mock interviews, and soft skills development. Perfect for final and pre-final year students.
-                            </p>
+                                <p className="text-white/90 mb-6 leading-relaxed text-base">
+                                    Prepare for top-tier placements with rigorous aptitude training, mock interviews, and soft skills development.
+                                </p>
 
-                            <div className="space-y-3 mb-8">
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">✓</div>
-                                    <span className="font-medium">Aptitude & Logic building</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">✓</div>
-                                    <span className="font-medium">Mock Interactions</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">✓</div>
-                                    <span className="font-medium">Resume Building</span>
-                                </div>
-                            </div>
-
-                            <Link to="/pep">
-                                <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 shadow-lg hover:shadow-xl transition-all border-0">
-                                    Learn More →
-                                </Button>
-                            </Link>
-                        </div>
-                    </Card>
-
-                    {/* HOPE Card - Enhanced */}
-                    <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 border-0 group hover:-translate-y-2">
-                        {/* Gradient Background Accent */}
-                        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500" />
-
-                        <div className="relative z-10 bg-gradient-to-br from-white via-indigo-50/30 to-white p-8">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="relative">
-                                    <div className="absolute inset-0 bg-indigo-500 blur-xl opacity-50 group-hover:opacity-75 transition-opacity rounded-2xl" />
-                                    <div className="relative p-4 bg-gradient-to-br from-indigo-500 to-purple-700 rounded-2xl text-white shadow-lg group-hover:scale-110 transition-transform">
-                                        <Code className="w-10 h-10" />
+                                <div className="space-y-2 mb-6">
+                                    <div className="flex items-center gap-2 text-white/90">
+                                        <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                                        <span className="text-sm font-medium">Aptitude & Logic Building</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-white/90">
+                                        <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                                        <span className="text-sm font-medium">Mock Interactions</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-white/90">
+                                        <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                                        <span className="text-sm font-medium">Resume Building</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <h3 className="text-2xl font-extrabold text-slate-900 mb-1">HOPE</h3>
-                                    <p className="text-sm text-slate-500 font-semibold">House of Programming Expertise</p>
-                                </div>
-                            </div>
 
-                            <p className="text-slate-700 mb-6 leading-relaxed text-base">
-                                An exclusive club for competitive programmers and developers.
-                                Master data structures, algorithms, and system design with peer learning and expert mentorship.
-                            </p>
-
-                            <div className="space-y-3 mb-8">
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">✓</div>
-                                    <span className="font-medium">DSA & CP Mastery</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">✓</div>
-                                    <span className="font-medium">Hackathons & Projects</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-slate-700">
-                                    <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">✓</div>
-                                    <span className="font-medium">Tech Talks</span>
-                                </div>
-                            </div>
-
-                            <Link to="/hope">
-                                <Button className="w-full bg-gradient-to-r from-indigo-600 to-purple-700 hover:from-indigo-700 hover:to-purple-800 text-white font-bold py-3 shadow-lg hover:shadow-xl transition-all border-0">
+                                <div className="inline-block px-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold rounded-full transition-all group-hover:scale-105">
                                     Learn More →
-                                </Button>
-                            </Link>
+                                </div>
+                            </div>
                         </div>
-                    </Card>
+                    </Link>
+
+                    {/* HOPE Card - Modern Rounded Style */}
+                    <Link to="/hope" className="block">
+                        <div className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-purple-600 via-violet-600 to-fuchsia-700 p-8 shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 group">
+                            {/* Decorative Elements */}
+                            <div className="absolute top-6 right-6 w-16 h-16 bg-lime-400 rounded-full opacity-20 group-hover:opacity-30 transition-opacity" />
+                            <div className="absolute bottom-6 left-6 w-20 h-20 bg-pink-400 rounded-full opacity-10 group-hover:opacity-20 transition-opacity" />
+
+                            {/* Content */}
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
+                                        <Code className="w-8 h-8 text-white" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-3xl font-extrabold text-white">HOPE</h3>
+                                        <p className="text-sm text-purple-200 font-medium">Programming Expertise</p>
+                                    </div>
+                                </div>
+
+                                <p className="text-white/90 mb-6 leading-relaxed text-base">
+                                    Master data structures, algorithms, and system design with peer learning and expert mentorship.
+                                </p>
+
+                                <div className="space-y-2 mb-6">
+                                    <div className="flex items-center gap-2 text-white/90">
+                                        <div className="w-2 h-2 rounded-full bg-lime-400" />
+                                        <span className="text-sm font-medium">DSA & CP Mastery</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-white/90">
+                                        <div className="w-2 h-2 rounded-full bg-lime-400" />
+                                        <span className="text-sm font-medium">Hackathons & Projects</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-white/90">
+                                        <div className="w-2 h-2 rounded-full bg-lime-400" />
+                                        <span className="text-sm font-medium">Tech Talks</span>
+                                    </div>
+                                </div>
+
+                                <div className="inline-block px-6 py-3 bg-lime-400 hover:bg-lime-300 text-slate-900 font-bold rounded-full transition-all group-hover:scale-105">
+                                    Learn More →
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </section>
 

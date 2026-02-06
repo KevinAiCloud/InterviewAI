@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8001';
 
 const api = axios.create({
     baseURL: API_URL,
@@ -11,7 +11,7 @@ const api = axios.create({
 
 export const uploadResume = async (formData) => {
     try {
-        const response = await api.post('/api/resume/upload', formData, {
+        const response = await api.post('/analyze', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -41,6 +41,33 @@ export const getQuestions = async () => {
         return response.data;
     } catch (error) {
         throw error.response?.data || { message: 'Failed to fetch questions' };
+    }
+};
+
+const ASSESSMENT_API_URL = 'http://localhost:8003'; // Direct to assessment service
+
+const assessmentApi = axios.create({
+    baseURL: ASSESSMENT_API_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+export const startAssessment = async (jobDescription) => {
+    try {
+        const response = await assessmentApi.post('/start', { job_description: jobDescription });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Failed to start assessment' };
+    }
+};
+
+export const submitAssessment = async (sessionId, answers) => {
+    try {
+        const response = await assessmentApi.post('/submit', { session_id: sessionId, answers });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Failed to submit assessment' };
     }
 };
 

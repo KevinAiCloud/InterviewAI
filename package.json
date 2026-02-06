@@ -1,0 +1,15 @@
+{
+    "name": "interview-ai-root",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev:frontend": "cd frontend && npm run dev",
+        "dev:resume": "python backend/resume-parser/api.py",
+        "dev:video": "python backend/video-analysis/api/server.py",
+        "dev:assessment": "python backend/assessment/api.py",
+        "dev": "concurrently -n \"FE,RES,VID,ASM\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgYellow.bold\" \"npm run dev:frontend\" \"npm run dev:resume\" \"npm run dev:video\" \"npm run dev:assessment\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

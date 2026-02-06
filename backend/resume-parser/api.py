@@ -7,6 +7,7 @@ import logging
 from typing import Optional
 
 # Import our existing logic
+# Import our existing logic
 from resumeparser import ResumeParser
 from llm import analyze_resume
 
@@ -78,6 +79,10 @@ async def analyze_endpoint(
         try:
             result = analyze_resume(resume_text, job_description)
             
+            logger.info(f"Analysis result type: {type(result)}")
+            if result is None:
+                 raise ValueError("Internal Error: analyze_resume returned None")
+
             # Handle potential error response from llm.py if it returned dict with error
             if "error" in result:
                 raise HTTPException(status_code=500, detail=f"AI Analysis failed: {result.get('error')}")

@@ -1,0 +1,9 @@
+opencv-python
+ultralytics
+moviepy<2.0.0
+openai
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+SpeechRecognition
